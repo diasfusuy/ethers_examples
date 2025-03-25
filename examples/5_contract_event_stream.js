@@ -1,7 +1,6 @@
 const { ethers } = require("ethers");
 
-const INFURA_ID = ''
-const provider = new ethers.providers.JsonRpcProvider(`https://mainnet.infura.io/v3/${INFURA_ID}`)
+const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mainnet.infura.io/v3/91cfa7ea066146ffbf977b0b531840ad`);
 
 const ERC20_ABI = [
     "function name() view returns (string)",
@@ -18,8 +17,9 @@ const contract = new ethers.Contract(address, ERC20_ABI, provider)
 const main = async () => {
     const block = await provider.getBlockNumber()
 
-    const transferEvents = await contract.queryFilter('Transfer', block - 1, block)
+    const transferEvents = await contract.queryFilter("Transfer", block -10, block) // use blocks to search between blocks otherwise it will look into all transactions.
     console.log(transferEvents)
+
 }
 
 main()
